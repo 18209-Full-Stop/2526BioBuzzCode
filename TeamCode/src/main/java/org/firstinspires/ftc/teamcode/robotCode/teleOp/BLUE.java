@@ -20,11 +20,11 @@ public class BLUE extends OpMode{
     public void loop() {
         //Intake
         if (gamepad2.left_bumper) { //left bumper gets artifacts out (brings them down)
-            intake.setPower(-1);
+            intake.intakesetPower(-1);
         } else if (gamepad2.right_bumper) { //right bumper puts them up
-            intake.setPower(1);
+            intake.intakesetPower(1);
         } else { //otherwise turns intake off
-            intake.setPower(0);
+            intake.intakesetPower(0);
         }
 
         //PedroPathing drive

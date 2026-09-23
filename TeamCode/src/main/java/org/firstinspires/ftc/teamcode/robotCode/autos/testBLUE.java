@@ -12,6 +12,7 @@ import static com.pedropathing.ivy.Scheduler.schedule;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static com.pedropathing.ivy.commands.Commands.*;
+import static com.pedropathing.ivy.groups.Groups.parallel;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 
@@ -26,7 +27,6 @@ public class testBLUE extends OpMode {
     public Intake intake;
 
     //Variables
-    private ElapsedTime  runtime = new ElapsedTime();
 
     //Create follower
     private Follower follower;
@@ -35,29 +35,29 @@ public class testBLUE extends OpMode {
     private final PoseFactory poseFactory = PoseFactory.degrees();
     private final Pose startPose = poseFactory.of(39.3311, 11.0999, 90);
     private final Pose path1 = poseFactory.of(66.6607, 33.9607, 180);
+    private final Pose point2 = poseFactory.of(13.0042, 34.4613, -0.5345);
 
     //All paths
     public Path path1() {
         return line(startPose, path1).linear(startPose, path1);
     }
+    public Path path2() {return line(path1, point2).reverseTangent();}
 
     //Runs the auto
     private Command autoRoutine() {
         return sequential(
                 follow(follower, path1()),
-                runIntake
+                intakePath2,
+                intake.refill()
         );
     }
 
     //Other commands!
-    Command runIntake = Command.build()
-            .setStart(() -> {
-                intake.setPower(0);
-                runtime.reset();
-            })
-            .setExecute(() -> intake.setPower(1.0))
-            .setDone(() -> runtime.seconds() >= 1.5)
-            .setEnd(endCondition -> intake.setPower(0));
+    Command intakePath2 = parallel(
+            intake.intakeSetPower(1.0),
+            follow(follower, path2())
+    );
+
 
     //Override statements
     @Override
