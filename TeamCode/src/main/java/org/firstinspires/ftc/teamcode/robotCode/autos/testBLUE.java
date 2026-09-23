@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static com.pedropathing.ivy.commands.Commands.*;
 import static com.pedropathing.ivy.groups.Groups.parallel;
+import static com.pedropathing.ivy.groups.Groups.race;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 
@@ -47,16 +48,14 @@ public class testBLUE extends OpMode {
     private Command autoRoutine() {
         return sequential(
                 follow(follower, path1()),
-                intakePath2,
+                race(
+                    intake.intakeSetPower(1.0),
+                    follow(follower, path2())
+                ),
                 intake.refill()
         );
     }
 
-    //Other commands!
-    Command intakePath2 = parallel(
-            intake.intakeSetPower(1.0),
-            follow(follower, path2())
-    );
 
 
     //Override statements

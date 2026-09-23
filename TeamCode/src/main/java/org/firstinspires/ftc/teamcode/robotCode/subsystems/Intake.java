@@ -28,7 +28,8 @@ public class Intake {
         return Command.build()
                 .setExecute(() -> {
                     intake.setPower(power);
-                });
+                })
+                .setEnd(endCondition -> intake.setPower(0));
     }
 
     public void gateOpen() {
@@ -45,13 +46,16 @@ public class Intake {
 
     public Command refill(){
        return Command.build()
-               .setStart(() -> gateOpen())
+               .setStart(() -> {
+                   gateOpen();
+                   runtime.reset();
+               })
                 .setExecute(() -> {
-                    intakeSetPower(1.0);
+                    intake.setPower(1.0);
                 })
                 .setDone(() -> runtime.seconds() >= 1.5)
                 .setEnd(endCondition -> {
-                    intakeSetPower(0);
+                    intake.setPower(0);
                     gateClose();
                 });
     }
