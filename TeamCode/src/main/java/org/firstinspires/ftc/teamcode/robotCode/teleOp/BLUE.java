@@ -6,6 +6,8 @@ import com.pedropathing.follower.ManualDrive;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.robotCode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.robotCode.subsystems.FlyWheel;
+
 
 @TeleOp
 public class BLUE extends OpMode{
@@ -15,16 +17,30 @@ public class BLUE extends OpMode{
 
     //Motors
     public Intake intake;
+    public FlyWheel flyWheel;
 
     @Override
     public void loop() {
         //Intake
         if (gamepad2.left_bumper) { //left bumper gets artifacts out (brings them down)
-            intake.intakesetPower(-1);
+            intake.setPower(-1);
         } else if (gamepad2.right_bumper) { //right bumper puts them up
-            intake.intakesetPower(1);
+            intake.setPower(1);
         } else { //otherwise turns intake off
-            intake.intakesetPower(0);
+            intake.setPower(0);
+        }
+
+        //FlyWheel
+        if (gamepad2.x) { //runs pollen flywheel
+            flyWheel.setPowerPol(1);
+        } else { //turns off
+            flyWheel.setPowerPol(0);
+        }
+
+        if (gamepad2.b) { //runs nectar flywheel
+            flyWheel.setPowerNec(1);
+        } else { //turns off
+            flyWheel.setPowerNec(0);
         }
 
         //PedroPathing drive
@@ -42,6 +58,7 @@ public class BLUE extends OpMode{
     public void init() {
         //Motor initialization
         intake = new Intake(hardwareMap);
+        flyWheel = new FlyWheel(hardwareMap);
 
         //follower = Constants.create(hardwareMap);
     }
