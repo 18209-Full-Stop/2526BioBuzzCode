@@ -68,14 +68,14 @@ public class bioBuzzRED extends LinearOpMode {
                 intake.refill()
         );
 
-        //Compiles commands to follow path1, then launch
+        //Commands to follow path1, then launch
         Command autoRoutine = sequential(
                 follow(follower, path1()),
                 repeat(launchRefill, 4),
-                waitMs(2000),
                 follow(follower, path2()),
                 intake.intakeSetPowerFor(1,2),
                 follow(follower, path3()),
+                repeat(launchRefill, 4),
                 follow(follower, path4())
         );
 
