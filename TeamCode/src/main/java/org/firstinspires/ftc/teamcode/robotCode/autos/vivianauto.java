@@ -27,11 +27,12 @@ public class vivianauto extends LinearOpMode{
 
     //Define path points HERE
 
-    private final Pose start = poseFactory.of(9.4266, 110.0461, 90);
+    private final Pose start = poseFactory.of(4.7897, 100.2235, 90);
     private final Pose path1 = poseFactory.of(22.479, 33.6268, 180);
-    private final Pose path2 = poseFactory.of(132.8847, 35.914, 180);
-    private final Pose path3 = poseFactory.of(127.5257, 112.2874, -85.9862);
-    private final Pose path4 = poseFactory.of(5.8279, 109.8221, 1.1605);
+    private final Pose point2 = poseFactory.of(132.8847, 35.914, 180);
+    private final Pose point3 = poseFactory.of(127.5257, 112.2874, -85.9862);
+    private final Pose point4 = poseFactory.of(5.8279, 109.8221, 1.1605);
+
 
     // Autonomous routine
     public Command autoRoutine() {
@@ -79,9 +80,16 @@ public class vivianauto extends LinearOpMode{
     }
 
     public Path path2() {
-        return line(path1, path2).linear(path1, path2);
+        return line(path1, point2).linear(path1, point2);
     }
 
+    public Path path3() {
+        return line(point2, point3).reverseTangent();
+    }
+
+    public Path path4() {
+        return line(point3, point4).reverseTangent();
+    }
 
 
 }
