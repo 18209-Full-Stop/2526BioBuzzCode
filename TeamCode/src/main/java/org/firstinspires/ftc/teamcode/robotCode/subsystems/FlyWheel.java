@@ -51,4 +51,12 @@ public class FlyWheel {
                     flyWheelNec.setPower(0);
                 });
     }
+
+    public void setPowerNec(double power){
+        flyWheelNec.setPower(power);
+    }
+
+    public void setPowerPol(double power){
+        flyWheelPol.setPower(power);
+    }
 }
