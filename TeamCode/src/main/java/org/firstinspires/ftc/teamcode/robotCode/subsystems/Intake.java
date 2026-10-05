@@ -32,8 +32,20 @@ public class Intake {
                 .setEnd(endCondition -> intake.setPower(0));
     }
 
+    public Command intakeSetPowerFor(double power, double duration) {
+        return Command.build()
+                .setStart(() -> runtime.reset())
+                .setExecute(() -> intake.setPower(power))
+                .setDone(() -> runtime.seconds() >= duration)
+                .setEnd(endCondition -> intake.setPower(0));
+    }
+
     public void gateOpen() {
         gate.setPosition(gatePosUp);
+    }
+
+    public void setPower(double power){
+        intake.setPower(power);
     }
 
     public void gateClose() {

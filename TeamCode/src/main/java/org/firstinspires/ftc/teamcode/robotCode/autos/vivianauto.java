@@ -26,10 +26,12 @@ public class vivianauto extends LinearOpMode{
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
     //Define path points HERE
-    private final Pose start = poseFactory.of(7.9434, 132.5912, 90);
-    private final Pose path1 = poseFactory.of(50.957, 39.5597, 180);
-    private final Pose path2 = poseFactory.of(132.8847, 35.914, 180);
 
+    private final Pose start = poseFactory.of(9.4266, 110.0461, 90);
+    private final Pose path1 = poseFactory.of(22.479, 33.6268, 180);
+    private final Pose path2 = poseFactory.of(132.8847, 35.914, 180);
+    private final Pose path3 = poseFactory.of(127.5257, 112.2874, -85.9862);
+    private final Pose path4 = poseFactory.of(5.8279, 109.8221, 1.1605);
 
     // Autonomous routine
     public Command autoRoutine() {
@@ -79,6 +81,7 @@ public class vivianauto extends LinearOpMode{
     public Path path2() {
         return line(path1, path2).linear(path1, path2);
     }
+
 
 
 }
