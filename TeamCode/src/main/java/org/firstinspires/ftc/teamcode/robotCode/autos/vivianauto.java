@@ -9,6 +9,7 @@ import com.pedropathing.ivy.Command;
 import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.commands.Commands.*;
+import static com.pedropathing.ivy.groups.Groups.repeat;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -27,11 +28,11 @@ public class vivianauto extends LinearOpMode{
 
     //Define path points HERE
 
-    private final Pose start = poseFactory.of(4.7897, 100.2235, 90);
-    private final Pose path1 = poseFactory.of(22.479, 33.6268, 180);
-    private final Pose point2 = poseFactory.of(132.8847, 35.914, 180);
-    private final Pose point3 = poseFactory.of(127.5257, 112.2874, -85.9862);
-    private final Pose point4 = poseFactory.of(5.8279, 109.8221, 1.1605);
+    private final Pose start = poseFactory.of(8.6214, 16.473, 90);
+    private final Pose point1Start = poseFactory.of(8.6214, 16.473, 180);
+    private final Pose point1 = poseFactory.of(23.6806, 31.2612, 102.512);
+    private final Pose point2 = poseFactory.of(134.529, 31.7244, -179.7606);
+    private final Pose point3 = poseFactory.of(11.1141, 46.1683, -6.6753);
 
 
     // Autonomous routine
@@ -39,6 +40,7 @@ public class vivianauto extends LinearOpMode{
         return sequential(
                 follow(follower, path1()),
                 follow(follower, path2()),
+                follow(follower, path3()),
                 intake.intakeSetPower(1)
         );
     }
@@ -55,7 +57,23 @@ public class vivianauto extends LinearOpMode{
 
         waitForStart();
         schedule(autoRoutine());
+        Command launchRefill = sequential(
+                intake.refill()
+        );
 
+        //Commands to follow path1, then launch
+        Command autoRoutine = sequential(
+                follow(follower, path1()),
+                repeat(launchRefill, 3),
+                follow(follower, path2()),
+                intake.intakeSetPowerFor(1,3),
+                follow(follower, path3()),
+                repeat(launchRefill, 3)
+        );
+
+        //Wait, then begin
+        waitForStart();
+        schedule(autoRoutine);
         while (opModeIsActive()) {
             follower.update();
             Scheduler.execute();
@@ -76,19 +94,15 @@ public class vivianauto extends LinearOpMode{
 
     //Define all paths HERE
     public Path path1() {
-        return line(start, path1).linear(start, path1);
+        return line(point1Start, point1).linear(point1Start, point1);
     }
 
     public Path path2() {
-        return line(path1, point2).linear(path1, point2);
+        return line(point1, point2).reverseTangent();
     }
 
     public Path path3() {
         return line(point2, point3).reverseTangent();
-    }
-
-    public Path path4() {
-        return line(point3, point4).reverseTangent();
     }
 
 
