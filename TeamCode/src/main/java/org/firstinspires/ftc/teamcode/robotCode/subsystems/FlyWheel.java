@@ -3,12 +3,22 @@ package org.firstinspires.ftc.teamcode.robotCode.subsystems;
 import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class FlyWheel {
+    //Motors
     private DcMotor flyWheelPol;
     private DcMotor flyWheelNec;
+
+    //Servos
+    private Servo polGate;
+    private Servo necGate;
+
+    //Timers, variables
     public ElapsedTime runtime = new ElapsedTime();
+    private static final double gatePosDown = 0.5;
+    private static final double gatePosUp = 0.2;
 
     public FlyWheel(HardwareMap hardwareMap) {
         flyWheelPol = hardwareMap.get(DcMotor.class, "flyWheelPol");
@@ -16,6 +26,9 @@ public class FlyWheel {
 
         flyWheelNec = hardwareMap.get(DcMotor.class, "flyWheelNec");
         flyWheelNec.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        polGate = hardwareMap.get(Servo.class, "polGate");
+        necGate = hardwareMap.get(Servo.class, "necGate");
     }
 
     public Command flyWheelPolSetPower(double power) {
@@ -38,17 +51,23 @@ public class FlyWheel {
         return Command.build()
                 .setStart(() -> {
                     runtime.reset();
+                    polGate.setPosition(gatePosDown);
+                    necGate.setPosition(gatePosDown);
                 })
                 .setExecute(() -> {
                     flyWheelPol.setPower(1.0);
+                    polGate.setPosition(gatePosUp);
                     if (useBoth){
                         flyWheelNec.setPower(1.0);
+                        necGate.setPosition(gatePosUp);
                     }
                 })
                 .setDone(() -> runtime.seconds() >= 1.5)
                 .setEnd(endCondition -> {
                     flyWheelPol.setPower(0);
                     flyWheelNec.setPower(0);
+                    polGate.setPosition(gatePosDown);
+                    necGate.setPosition(gatePosDown);
                 });
     }
 
