@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.robotCode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.robotCode.subsystems.FlyWheel;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 
 @TeleOp
@@ -41,6 +43,18 @@ public class BLUE extends OpMode{
             flyWheel.setPowerNec(1);
         } else { //turns off
             flyWheel.setPowerNec(0);
+        }
+
+        if (gamepad2.left_trigger >= 0.5){
+            flyWheel.openPol();
+        } else{
+            flyWheel.closePol();
+        }
+
+        if (gamepad2.right_trigger >= 0.5){
+            flyWheel.openNec();
+        } else{
+            flyWheel.closeNec();
         }
 
         //PedroPathing drive

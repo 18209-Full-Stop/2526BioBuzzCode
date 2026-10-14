@@ -78,4 +78,20 @@ public class FlyWheel {
     public void setPowerPol(double power){
         flyWheelPol.setPower(power);
     }
+
+    public void closePol(){
+        polGate.setPosition(gatePosDown);
+    }
+
+    public void openPol(){
+        polGate.setPosition(gatePosUp);
+    }
+
+    public void closeNec(){
+        necGate.setPosition(gatePosDown);
+    }
+
+    public void openNec(){
+        necGate.setPosition(gatePosUp);
+    }
 }
