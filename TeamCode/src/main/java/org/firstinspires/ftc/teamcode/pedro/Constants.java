@@ -37,7 +37,6 @@ public class Constants {
         c.yPodOffset.set(3.759375444547398);
         //Changed to reversed
         c.xPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
-
         c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
         c.globalDistanceUnit.set(DistanceUnit.INCH);
         c.offsetUnits.set(DistanceUnit.INCH);
