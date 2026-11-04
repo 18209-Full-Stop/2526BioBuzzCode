@@ -31,11 +31,22 @@ public class Constants {
     });
 
     public static PinpointConfig localizerConfig = new PinpointConfig(c -> {
+//        Old working vals; Prior to November 2nd
+//        c.name.set("pinpoint");
+//        c.podType.set(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+//        c.xPodOffset.set(3.213394044891117);
+//        c.yPodOffset.set(3.759375444547398);
+//        //Changed to reversed
+//        c.xPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
+//        c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
+//        c.globalDistanceUnit.set(DistanceUnit.INCH);
+//        c.offsetUnits.set(DistanceUnit.INCH);
+
+        //New vals with Mr. DeSousa
         c.name.set("pinpoint");
         c.podType.set(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-        c.xPodOffset.set(3.213394044891117);
-        c.yPodOffset.set(3.759375444547398);
-        //Changed to reversed
+        c.xPodOffset.set(3.059833556648315);
+        c.yPodOffset.set(0.801588869470311);
         c.xPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
         c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
         c.globalDistanceUnit.set(DistanceUnit.INCH);
