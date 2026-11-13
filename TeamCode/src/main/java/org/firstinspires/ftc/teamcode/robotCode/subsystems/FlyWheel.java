@@ -12,8 +12,8 @@ public class FlyWheel {
     private DcMotor flyWheelNec;
 
     //Servos
-    private Servo polGate;
-    private Servo necGate;
+//    private Servo polGate;
+//    private Servo necGate;
 
     //Timers, variables
     public ElapsedTime runtime = new ElapsedTime();
@@ -31,33 +31,33 @@ public class FlyWheel {
         flyWheelNec = hardwareMap.get(DcMotor.class, "flyWheelNec");
         flyWheelNec.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        polGate = hardwareMap.get(Servo.class, "polGate");
-        necGate = hardwareMap.get(Servo.class, "necGate");
+//        polGate = hardwareMap.get(Servo.class, "polGate");
+//        necGate = hardwareMap.get(Servo.class, "necGate");
     }
 
     public Command launch(boolean useNec, boolean usePol){
         return Command.build()
                 .setStart(() -> {
                     runtime.reset();
-                    polGate.setPosition(gatePosDown);
-                    necGate.setPosition(gatePosDown);
+//                    polGate.setPosition(gatePosDown);
+//                    necGate.setPosition(gatePosDown);
                 })
                 .setExecute(() -> {
                     if (usePol){
                         flyWheelPol.setPower(1.0);
-                        polGate.setPosition(gatePosUp);
+//                        polGate.setPosition(gatePosUp);
                     }
                     if (useNec){
                         flyWheelNec.setPower(1.0);
-                        necGate.setPosition(gatePosUp);
+//                        necGate.setPosition(gatePosUp);
                     }
                 })
                 .setDone(() -> runtime.seconds() >= 1.5)
                 .setEnd(endCondition -> {
                     flyWheelPol.setPower(0);
                     flyWheelNec.setPower(0);
-                    polGate.setPosition(gatePosDown);
-                    necGate.setPosition(gatePosDown);
+//                    polGate.setPosition(gatePosDown);
+//                    necGate.setPosition(gatePosDown);
                 });
     }
 
@@ -75,28 +75,28 @@ public class FlyWheel {
                     if (usePol) {
                         isLaunchingPol = true;
                         isOpenPol = true;
-                        polGate.setPosition(gatePosDown);
+//                        polGate.setPosition(gatePosDown);
                     }
                     if (useNec) {
                         isLaunchingNec = true;
                         isOpenNec = true;
-                        necGate.setPosition(gatePosDown);
+//                        necGate.setPosition(gatePosDown);
                     }
                 })
                 .setExecute(() -> {
                     if (usePol) {
-                        polGate.setPosition(gatePosUp);
+//                        polGate.setPosition(gatePosUp);
                         if (runtime.seconds() >= 0.5) {
-                            polGate.setPosition(gatePosDown);
+//                            polGate.setPosition(gatePosDown);
                             isOpenPol = false;
                             flyWheelPol.setPower(power);
                         }
                     }
                     if (useNec) {
-                        necGate.setPosition(gatePosUp);
+//                        necGate.setPosition(gatePosUp);
                         if (runtime.seconds() >= 0.5) {
+//                            necGate.setPosition(gatePosDown);
                             isOpenNec = false;
-                            necGate.setPosition(gatePosDown);
                             flyWheelNec.setPower(power);
                         }
                     }
@@ -105,30 +105,28 @@ public class FlyWheel {
                 .setEnd(endCondition -> {
                     if (usePol) {
                         isLaunchingPol = false;
-                        polGate.setPosition(gatePosDown);
                         flyWheelPol.setPower(0);
                     }
                     if (useNec) {
                         isLaunchingNec = false;
                         flyWheelNec.setPower(0);
-                        necGate.setPosition(gatePosDown);
                     }
                 });
     }
 
-    public void closePol(){
-        polGate.setPosition(gatePosDown);
-    }
+//    public void closePol(){
+//        polGate.setPosition(gatePosDown);
+//    }
 
-    public void openPol(){
-        polGate.setPosition(gatePosUp);
-    }
+//    public void openPol(){
+//        polGate.setPosition(gatePosUp);
+//    }
 
-    public void closeNec(){
-        necGate.setPosition(gatePosDown);
-    }
+//    public void closeNec(){
+//        necGate.setPosition(gatePosDown);
+//    }
 
-    public void openNec(){
-        necGate.setPosition(gatePosUp);
-    }
+//    public void openNec(){
+//        necGate.setPosition(gatePosUp);
+//    }
 }

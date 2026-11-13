@@ -15,6 +15,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagClusterDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagClusterDetection;
 
 
 import java.util.List;
@@ -63,7 +64,7 @@ public class AprilTags {
         backRight.setDirection(DcMotor.Direction.FORWARD);
     }
 
-    public void calcVals()
+    public void calcVals(String tagName)
     {
         double  drive           = 0;        // Desired forward power/speed (-1 to +1)
         double  strafe          = 0;        // Desired strafe power/speed (-1 to +1)
@@ -82,7 +83,19 @@ public class AprilTags {
             List<AprilTagDetection> currentDetections = aprilTag.getDetections();
             for (AprilTagDetection detection : currentDetections) {
 
-                if (detection instanceof AprilTagSingleDetection) {
+                if (detection instanceof AprilTagClusterDetection) {
+                    AprilTagClusterDetection clusterDet = (AprilTagClusterDetection) detection;
+                        if (DESIRED_CLUSTER_NAME == null || clusterDet.metadata.shortName.contains(tagName)) {
+                            // Yes, we want to use this tag.
+                            targetName = clusterDet.metadata.shortName;
+                            targetID = -1;
+                            targetRange = clusterDet.ftcPose.range;
+                            targetBearing = clusterDet.ftcPose.bearing;
+                            targetYaw = clusterDet.ftcPose.yaw;
+                            targetFound = true;
+                            break;  // don't look any further.
+                    }
+                } else {
                     AprilTagSingleDetection singleDetection = (AprilTagSingleDetection) detection;
 
                     // Look to see if we have size info on this tag.
@@ -102,19 +115,6 @@ public class AprilTags {
                         }
                     } else {
                         // This tag is NOT in the library, so we don't have enough information to track to it.
-                    }
-                } else {
-                    AprilTagClusterDetection clusterDet = (AprilTagClusterDetection) detection;
-
-                    if (DESIRED_CLUSTER_NAME == null || clusterDet.metadata.shortName.equals(DESIRED_CLUSTER_NAME) ) {
-                        // Yes, we want to use this tag.
-                        targetName    = clusterDet.metadata.shortName;
-                        targetID      = -1;
-                        targetRange   = clusterDet.ftcPose.range;
-                        targetBearing = clusterDet.ftcPose.bearing;
-                        targetYaw     = clusterDet.ftcPose.yaw;
-                        targetFound = true;
-                        break;  // don't look any further.
                     }
                 }
             }

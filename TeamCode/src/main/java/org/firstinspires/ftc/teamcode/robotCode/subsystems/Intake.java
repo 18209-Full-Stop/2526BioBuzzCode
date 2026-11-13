@@ -10,7 +10,7 @@ import static com.pedropathing.ivy.Scheduler.schedule;
 
 public class Intake {
     private DcMotor intake;
-    private Servo gate;
+//    private Servo gate;
 
     //Variables
     final double gatePosDown = 0.5;
@@ -21,7 +21,7 @@ public class Intake {
         intake = hardwareMap.get(DcMotor.class, "intake");
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        gate = hardwareMap.get(Servo.class, "gate");
+//        gate = hardwareMap.get(Servo.class, "gate");
     }
 
     public Command intakeSetPower(double power) {
@@ -41,7 +41,7 @@ public class Intake {
     }
 
     public void gateOpen() {
-        gate.setPosition(gatePosUp);
+//        gate.setPosition(gatePosUp);
     }
 
     public void setPower(double power){
@@ -49,11 +49,11 @@ public class Intake {
     }
 
     public void gateClose() {
-        gate.setPosition(gatePosDown);
+//        gate.setPosition(gatePosDown);
     }
 
     public void gateMove(double pos) {
-        gate.setPosition(pos);
+//        gate.setPosition(pos);
     }
 
     public Command refill(){
