@@ -64,7 +64,7 @@ public class bioBuzzRED extends LinearOpMode {
 
         //Launch then refill
         Command launchRefill = sequential(
-                flyWheel.launch(false),
+                flyWheel.launch(false, true),
                 intake.refill()
         );
 

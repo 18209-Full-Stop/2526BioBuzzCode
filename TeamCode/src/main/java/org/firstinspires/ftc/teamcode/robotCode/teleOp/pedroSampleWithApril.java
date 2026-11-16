@@ -5,21 +5,23 @@ import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.ManualDrive;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.robotCode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.robotCode.subsystems.FlyWheel;
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 
 @TeleOp
-public class BLUE extends OpMode{
+public class pedroSampleWithApril extends OpMode{
 
-    //Create follower
+    //Create follower + variables
     private Follower follower;
+    private boolean autoAlign = false;
 
     //Motors
     public Intake intake;
     public FlyWheel flyWheel;
+
 
     @Override
     public void loop() {
@@ -57,15 +59,23 @@ public class BLUE extends OpMode{
             flyWheel.closeNec();
         }
 
-        //PedroPathing drive
-        DrivePowers powers = ManualDrive.fieldCentric(
-                -gamepad1.left_stick_y,
-                gamepad1.left_stick_x,
-                gamepad1.right_stick_x,
-                follower.pose().heading()
-        );
-        ManualDrive.driveOrHold(follower, powers);
-        follower.update();
+        if (gamepad1.a){
+            autoAlign = true;
+        } else if (gamepad1.b){
+            autoAlign = false;
+        }
+
+        if (!autoAlign) {
+            //PedroPathing drive
+            DrivePowers powers = ManualDrive.fieldCentric(
+                    -gamepad1.left_stick_y,
+                    gamepad1.left_stick_x,
+                    gamepad1.right_stick_x,
+                    follower.pose().heading()
+            );
+            ManualDrive.driveOrHold(follower, powers);
+            follower.update();
+        }
     }
 
     @Override
@@ -74,7 +84,7 @@ public class BLUE extends OpMode{
         intake = new Intake(hardwareMap);
         flyWheel = new FlyWheel(hardwareMap);
 
-        //follower = Constants.create(hardwareMap);
+        follower = Constants.create(hardwareMap);
     }
 
 }

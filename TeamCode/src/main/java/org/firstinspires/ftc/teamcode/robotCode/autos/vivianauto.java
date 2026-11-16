@@ -15,7 +15,9 @@ import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.robotCode.subsystems.Intake;
+import com.pedropathing.follower.Follower;
 
 @Autonomous
 public class vivianauto extends LinearOpMode{
@@ -51,7 +53,7 @@ public class vivianauto extends LinearOpMode{
         intake = new Intake(hardwareMap);
 
         Scheduler.reset();
-        //follower = Constants.create(hardwareMap);
+        follower = Constants.create(hardwareMap);
         follower.setPose(start);
         follower.update();
 
