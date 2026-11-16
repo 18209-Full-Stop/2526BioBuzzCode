@@ -60,18 +60,18 @@ public class allField extends OpMode{
 //        }
 
         //Pollen code for gate
-        if (gamepad2.left_trigger >= 0.5){
-            flyWheel.openPol();
-        } else if(!flyWheel.isOpenPol){
-            flyWheel.closePol();
-        }
+//        if (gamepad2.left_trigger >= 0.5){
+//            flyWheel.openPol();
+//        } else if(!flyWheel.isOpenPol){
+//            flyWheel.closePol();
+//        }
 
         //Nectar code for gate
-        if (gamepad2.right_trigger >= 0.5){
-            flyWheel.openNec();
-        } else if(!flyWheel.isOpenNec){
-            flyWheel.closeNec();
-        }
+//        if (gamepad2.right_trigger >= 0.5){
+//            flyWheel.openNec();
+//        } else if(!flyWheel.isOpenNec){
+//            flyWheel.closeNec();
+//        }
 
         //Manual code to run flywheel nectar
         if (gamepad2.y){

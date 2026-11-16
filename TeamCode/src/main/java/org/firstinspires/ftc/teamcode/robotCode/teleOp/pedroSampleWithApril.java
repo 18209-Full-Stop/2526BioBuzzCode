@@ -47,17 +47,17 @@ public class pedroSampleWithApril extends OpMode{
             flyWheel.setPowerNec(0);
         }
 
-        if (gamepad2.left_trigger >= 0.5){
-            flyWheel.openPol();
-        } else{
-            flyWheel.closePol();
-        }
+//        if (gamepad2.left_trigger >= 0.5){
+//            flyWheel.openPol();
+//        } else{
+//            flyWheel.closePol();
+//        }
 
-        if (gamepad2.right_trigger >= 0.5){
-            flyWheel.openNec();
-        } else{
-            flyWheel.closeNec();
-        }
+//        if (gamepad2.right_trigger >= 0.5){
+//            flyWheel.openNec();
+//        } else{
+//            flyWheel.closeNec();
+//        }
 
         if (gamepad1.a){
             autoAlign = true;

@@ -69,16 +69,16 @@ public class BLUEwithApril extends OpMode{
 
         //Pollen code for gate
         if (gamepad2.left_trigger >= 0.5){
-            flyWheel.openPol();
+//            flyWheel.openPol();
         } else if(!flyWheel.isOpenPol){
-            flyWheel.closePol();
+//            flyWheel.closePol();
         }
 
         //Nectar code for gate
         if (gamepad2.right_trigger >= 0.5){
-            flyWheel.openNec();
+//            flyWheel.openNec();
         } else if(!flyWheel.isOpenNec){
-            flyWheel.closeNec();
+//            flyWheel.closeNec();
         }
 
         //Manual code to run flywheel nectar
