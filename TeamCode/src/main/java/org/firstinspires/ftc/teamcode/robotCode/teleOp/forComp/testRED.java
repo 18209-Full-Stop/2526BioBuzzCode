@@ -1,8 +1,9 @@
-package org.firstinspires.ftc.teamcode.robotCode.teleOp;
+package org.firstinspires.ftc.teamcode.robotCode.teleOp.forComp;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.ManualDrive;
+import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -11,10 +12,11 @@ import org.firstinspires.ftc.teamcode.robotCode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.robotCode.subsystems.FlyWheel;
 
 import com.pedropathing.ivy.Scheduler;
-import com.pedropathing.math.Pose;
+import static com.pedropathing.ivy.Scheduler.schedule;
+import static com.pedropathing.ivy.groups.Groups.repeat;
 
 @TeleOp
-public class testBLUE extends OpMode{
+public class testRED extends OpMode{
     //Variables
     private double polSpeed = 1.0;
     private double necSpeed = 1.0;
@@ -39,12 +41,12 @@ public class testBLUE extends OpMode{
 
         //REAL pollen code for launching
 //        if (gamepad2.x) { //runs pollen flywheel
-//            schedule(flyWheel.workLaunch(1,0.75,false,true));
+//            schedule(flyWheel.workLaunch(1,1.5,false,true));
 //        }
 //
 //        //REAL nectar code for launching
 //        if (gamepad2.b) { //runs pollen flywheel
-//            schedule(flyWheel.workLaunch(1,0.75,true,false));
+//            schedule(flyWheel.workLaunch(1,1.5,true,false));
 //        }
 
         //FlyWheel
@@ -107,14 +109,13 @@ public class testBLUE extends OpMode{
             necSpeed -= 1.0;
         }
 
-
         //PedroPathing drive
         DrivePowers powers = ManualDrive.fieldCentric(
                 -gamepad1.left_stick_y,
                 gamepad1.left_stick_x,
                 gamepad1.right_stick_x,
                 //added the 90 degrees
-                follower.pose().heading() - Math.toRadians(90)
+                follower.pose().heading() + Math.toRadians(90)
         );
         ManualDrive.driveOrHold(follower, powers);
         follower.update();

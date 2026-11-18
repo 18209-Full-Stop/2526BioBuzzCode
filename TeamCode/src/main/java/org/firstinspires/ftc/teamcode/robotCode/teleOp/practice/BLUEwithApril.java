@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robotCode.teleOp;
+package org.firstinspires.ftc.teamcode.robotCode.teleOp.practice;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.drivetrain.DrivePowers;
@@ -9,14 +9,17 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.robotCode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.robotCode.subsystems.FlyWheel;
+import org.firstinspires.ftc.teamcode.robotCode.subsystems.AprilTags;
 
 import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.groups.Groups.repeat;
 
+
 @TeleOp
-public class allField extends OpMode{
+public class BLUEwithApril extends OpMode{
     //Variables
+    private boolean autoAlign = false;
 
     //Create follower
     private Follower follower;
@@ -24,6 +27,7 @@ public class allField extends OpMode{
     //Motors
     public Intake intake;
     public FlyWheel flyWheel;
+    public AprilTags aprilTags;
 
     @Override
     public void loop() {
@@ -60,18 +64,18 @@ public class allField extends OpMode{
 //        }
 
         //Pollen code for gate
-//        if (gamepad2.left_trigger >= 0.5){
+        if (gamepad2.left_trigger >= 0.5){
 //            flyWheel.openPol();
-//        } else if(!flyWheel.isOpenPol){
+        } else if(!flyWheel.isOpenPol){
 //            flyWheel.closePol();
-//        }
+        }
 
         //Nectar code for gate
-//        if (gamepad2.right_trigger >= 0.5){
+        if (gamepad2.right_trigger >= 0.5){
 //            flyWheel.openNec();
-//        } else if(!flyWheel.isOpenNec){
+        } else if(!flyWheel.isOpenNec){
 //            flyWheel.closeNec();
-//        }
+        }
 
         //Manual code to run flywheel nectar
         if (gamepad2.y){
@@ -87,15 +91,26 @@ public class allField extends OpMode{
             flyWheel.setPowerPol(0);
         }
 
+        //Decides whether to use auto-align
+        if (gamepad1.left_bumper){
+            autoAlign = true;
+        } else if (gamepad1.right_bumper){
+            autoAlign = false;
+        }
+
         //PedroPathing drive
-        DrivePowers powers = ManualDrive.fieldCentric(
-                -gamepad1.left_stick_y,
-                gamepad1.left_stick_x,
-                gamepad1.right_stick_x,
-                follower.pose().heading()
-        );
-        ManualDrive.driveOrHold(follower, powers);
-        follower.update();
+        if (!autoAlign) {
+            DrivePowers powers = ManualDrive.fieldCentric(
+                    -gamepad1.left_stick_y,
+                    gamepad1.left_stick_x,
+                    gamepad1.right_stick_x,
+                    follower.pose().heading() - Math.toRadians(90)
+            );
+            ManualDrive.driveOrHold(follower, powers);
+            follower.update();
+        } else {
+            aprilTags.calcVals("Red");
+        }
     }
 
     @Override
@@ -106,6 +121,7 @@ public class allField extends OpMode{
         //Motor initialization
         intake = new Intake(hardwareMap);
         flyWheel = new FlyWheel(hardwareMap);
+        aprilTags = new AprilTags(hardwareMap);
 
         follower = Constants.create(hardwareMap);
 

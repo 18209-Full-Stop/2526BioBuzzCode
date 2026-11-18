@@ -1,6 +1,5 @@
-package org.firstinspires.ftc.teamcode.robotCode.autos;
+package org.firstinspires.ftc.teamcode.robotCode.autos.forComp;
 
-import static com.pedropathing.api.Paths.*;
 import com.pedropathing.api.Paths;
 
 import com.pedropathing.api.PoseFactory;
@@ -10,7 +9,6 @@ import com.pedropathing.paths.Path;
 import com.pedropathing.ivy.Command;
 import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
-import static com.pedropathing.ivy.commands.Commands.*;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -18,19 +16,17 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
-public class startParkRed {
-
-    @Autonomous(name = "AutoPath", group = "Autonomous")
-    public class AutoPath extends LinearOpMode {
+@Autonomous
+public class startParkBlue extends LinearOpMode{
 
         private Follower follower;
 
         private final PoseFactory poseFactory = PoseFactory.degrees();
 
-        private final Pose start = poseFactory.of(10, 72, 90);
-        private final Pose path1 = poseFactory.of(20, 72, 0);
-        private final Pose point2 = poseFactory.of(20, 108, 0);
-        private final Pose point3 = poseFactory.of(10, 108, 0);
+        private final Pose start = poseFactory.of(132, 72, 90);
+        private final Pose path1 = poseFactory.of(120, 72, 180);
+        private final Pose point2 = poseFactory.of(120, 36, 180);
+        private final Pose point3 = poseFactory.of(132, 36, 180);
 
         // Autonomous routine
         public Command autoRoutine() {
@@ -40,6 +36,8 @@ public class startParkRed {
                     follow(follower, path3())
             );
         }
+
+        // test2
 
         @Override
         public void runOpMode() {
@@ -79,7 +77,6 @@ public class startParkRed {
         public Path path3() {
             return Paths.line(point2, point3).constant(point3);
         }
-    }
+
 
 }
-

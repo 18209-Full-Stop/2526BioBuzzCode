@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robotCode.teleOp;
+package org.firstinspires.ftc.teamcode.robotCode.teleOp.practice;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -8,9 +8,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
-
-import java.util.function.Supplier;
 
 @TeleOp
 public class noPedro extends OpMode {

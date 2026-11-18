@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robotCode.autos;
+package org.firstinspires.ftc.teamcode.robotCode.autos.practice;
 
 import static com.pedropathing.api.Paths.*;
 
@@ -11,11 +11,7 @@ import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-import static com.pedropathing.ivy.commands.Commands.*;
-import static com.pedropathing.ivy.groups.Groups.parallel;
-import static com.pedropathing.ivy.groups.Groups.race;
 import static com.pedropathing.ivy.groups.Groups.repeat;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
@@ -23,7 +19,6 @@ import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 //import static org.opencv.core.Core.repeat;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.robotCode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.robotCode.subsystems.FlyWheel;
