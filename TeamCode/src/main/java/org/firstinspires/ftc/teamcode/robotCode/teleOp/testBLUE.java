@@ -11,12 +11,13 @@ import org.firstinspires.ftc.teamcode.robotCode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.robotCode.subsystems.FlyWheel;
 
 import com.pedropathing.ivy.Scheduler;
-import static com.pedropathing.ivy.Scheduler.schedule;
-import static com.pedropathing.ivy.groups.Groups.repeat;
+import com.pedropathing.math.Pose;
 
 @TeleOp
 public class testBLUE extends OpMode{
     //Variables
+    private double polSpeed = 1.0;
+    private double necSpeed = 1.0;
 
     //Create follower
     private Follower follower;
@@ -75,17 +76,37 @@ public class testBLUE extends OpMode{
 
         //Manual code to run flywheel nectar
         if (gamepad2.y){
-            flyWheel.setPowerNec(1.0);
+            flyWheel.setPowerNec(necSpeed);
         } else if (!flyWheel.isLaunchingNec){
             flyWheel.setPowerNec(0);
         }
 
         //Manual code to run flywheel pollen
         if (gamepad2.a){
-            flyWheel.setPowerPol(1.0);
+            flyWheel.setPowerPol(polSpeed);
         } else if (!flyWheel.isLaunchingPol){
             flyWheel.setPowerPol(0);
         }
+
+        //Resets heading when pressed
+        if (gamepad1.left_bumper){
+            follower.setPose(new Pose(follower.pose().x(), follower.pose().y(), 0));
+        }
+
+        //Increments speed of pollen flywheel
+        if (gamepad2.dpadUpWasPressed()) {
+            polSpeed += 0.1;
+        } else if(gamepad2.dpadDownWasPressed()){
+            polSpeed -= 1.0;
+        }
+
+        //Increments speed of nectar flywheel
+        if (gamepad2.dpadRightWasPressed()) {
+            necSpeed += 0.1;
+        } else if(gamepad2.dpadLeftWasPressed()){
+            necSpeed -= 1.0;
+        }
+
 
         //PedroPathing drive
         DrivePowers powers = ManualDrive.fieldCentric(

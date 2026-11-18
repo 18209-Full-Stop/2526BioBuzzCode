@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robotCode.teleOp;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.ManualDrive;
+import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -17,6 +18,8 @@ import static com.pedropathing.ivy.groups.Groups.repeat;
 @TeleOp
 public class testRED extends OpMode{
     //Variables
+    private double polSpeed = 1.0;
+    private double necSpeed = 1.0;
 
     //Create follower
     private Follower follower;
@@ -85,6 +88,25 @@ public class testRED extends OpMode{
             flyWheel.setPowerPol(1.0);
         } else if (!flyWheel.isLaunchingPol){
             flyWheel.setPowerPol(0);
+        }
+
+        //Resets heading when pressed
+        if (gamepad1.left_bumper){
+            follower.setPose(new Pose(follower.pose().x(), follower.pose().y(), 0));
+        }
+
+        //Increments speed of pollen flywheel
+        if (gamepad2.dpadUpWasPressed()) {
+            polSpeed += 0.1;
+        } else if(gamepad2.dpadDownWasPressed()){
+            polSpeed -= 1.0;
+        }
+
+        //Increments speed of nectar flywheel
+        if (gamepad2.dpadRightWasPressed()) {
+            necSpeed += 0.1;
+        } else if(gamepad2.dpadLeftWasPressed()){
+            necSpeed -= 1.0;
         }
 
         //PedroPathing drive
