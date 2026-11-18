@@ -110,8 +110,8 @@ public class testRED extends OpMode{
 
         follower = Constants.create(hardwareMap);
 
-        //Runs commands
-        Scheduler.execute();
+        //Runs commands; commented out for now
+//        Scheduler.execute();
     }
 
 }
