@@ -30,6 +30,10 @@ public class testRED extends OpMode{
 
     @Override
     public void loop() {
+        //Telemetry info
+        telemetry.addData("polSpeed", polSpeed);
+        telemetry.addData("necSpeed", necSpeed);
+
         //Intake
         if (gamepad2.left_bumper) { //left bumper gets artifacts out (brings them down)
             intake.setPower(-1);
@@ -96,17 +100,24 @@ public class testRED extends OpMode{
         }
 
         //Increments speed of pollen flywheel
-        if (gamepad2.dpadUpWasPressed()) {
+        if (gamepad2.dpadUpWasPressed() && !(polSpeed >= 1.0)) {
             polSpeed += 0.1;
-        } else if(gamepad2.dpadDownWasPressed()){
-            polSpeed -= 1.0;
+        } else if(gamepad2.dpadDownWasPressed() && !(polSpeed <= 0)){
+            polSpeed -= 0.1;
         }
 
         //Increments speed of nectar flywheel
-        if (gamepad2.dpadRightWasPressed()) {
+        if (gamepad2.dpadRightWasPressed() && !(necSpeed >= 1.0)) {
             necSpeed += 0.1;
-        } else if(gamepad2.dpadLeftWasPressed()){
-            necSpeed -= 1.0;
+        } else if(gamepad2.dpadLeftWasPressed() && !(necSpeed <= 0)){
+            necSpeed -= 0.1;
+        }
+
+        //resets necSpeed
+        if (gamepad2.left_trigger >= 0.5){
+            necSpeed = 0;
+        } else if (gamepad2.right_trigger >= 0.5){ //resets polSpeed
+            polSpeed = 0;
         }
 
         //PedroPathing drive
@@ -114,7 +125,7 @@ public class testRED extends OpMode{
                 -gamepad1.left_stick_y,
                 gamepad1.left_stick_x,
                 gamepad1.right_stick_x,
-                //added the 90 degrees
+                //added the 90 degrees rotation 4 red alliance
                 follower.pose().heading() + Math.toRadians(90)
         );
         ManualDrive.driveOrHold(follower, powers);

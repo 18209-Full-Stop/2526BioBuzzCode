@@ -20,7 +20,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.robotCode.subsystems.Intake;
 
 @Autonomous
-public class testBLUE extends OpMode {
+public class testBLUEAUTO extends OpMode {
     //Motors
     public Intake intake;
 
