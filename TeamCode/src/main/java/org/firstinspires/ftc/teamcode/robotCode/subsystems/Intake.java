@@ -7,10 +7,11 @@ import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static com.pedropathing.ivy.Scheduler.schedule;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 public class Intake {
     private DcMotor intake;
-//    private Servo gate;
+    private Servo necGate;
 
     //Variables
     final double gatePosDown = 0.5;
@@ -21,7 +22,7 @@ public class Intake {
         intake = hardwareMap.get(DcMotor.class, "intake");
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-//        gate = hardwareMap.get(Servo.class, "gate");
+        necGate = hardwareMap.get(Servo.class, "necGate");
     }
 
     public Command intakeSetPower(double power) {
@@ -40,16 +41,16 @@ public class Intake {
                 .setEnd(endCondition -> intake.setPower(0));
     }
 
-    public void gateOpen() {
-//        gate.setPosition(gatePosUp);
+    public void necGateOpen() {
+        necGate.setPosition(gatePosUp);
     }
 
     public void setPower(double power){
         intake.setPower(power);
     }
 
-    public void gateClose() {
-//        gate.setPosition(gatePosDown);
+    public void necGateClose() {
+        necGate.setPosition(0);
     }
 
     public void gateMove(double pos) {
@@ -59,7 +60,7 @@ public class Intake {
     public Command refill(){
        return Command.build()
                .setStart(() -> {
-                   gateOpen();
+                   necGateOpen();
                    runtime.reset();
                })
                 .setExecute(() -> {
@@ -68,7 +69,7 @@ public class Intake {
                 .setDone(() -> runtime.seconds() >= 1.5)
                 .setEnd(endCondition -> {
                     intake.setPower(0);
-                    gateClose();
+                    necGateClose();
                 });
     }
 }
