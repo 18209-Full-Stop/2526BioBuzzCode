@@ -123,7 +123,7 @@ public class BLUEwithApril extends OpMode{
         flyWheel = new FlyWheel(hardwareMap);
         aprilTags = new AprilTags(hardwareMap);
 
-        follower = Constants.create(hardwareMap);
+//        follower = Constants.create(hardwareMap);
 
         //Runs commands
         Scheduler.execute();

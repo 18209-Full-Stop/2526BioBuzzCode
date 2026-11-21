@@ -49,7 +49,7 @@ public class mayaTest extends LinearOpMode{
     public void runOpMode() {
         //Initialize
         Scheduler.reset();
-        follower = Constants.create(hardwareMap);
+//        follower = Constants.create(hardwareMap);
         follower.setPose(start);
         follower.update();
 

@@ -43,7 +43,7 @@ public class realServo extends OpMode{
         //Motor initialization
         necGate = hardwareMap.get(Servo.class, "necGate");
 
-        follower = Constants.create(hardwareMap);
+//        follower = Constants.create(hardwareMap);
 
         Scheduler.execute();
 

@@ -30,17 +30,22 @@ public class testServoRun extends OpMode{
     public void loop() {
         //Intake
         if (gamepad2.left_bumper) { //left bumper gets artifacts out (brings them down)
-            intake.necGateOpen();
+            intake.setPolPos(0.5);
         } else if (gamepad2.right_bumper) { //right bumper puts them up
+            intake.setPolPos(0);
+        }
+
+        if (gamepad2.left_trigger >= 0.5) { //left bumper gets artifacts out (brings them down)
+            intake.necGateOpen();
+        } else if (gamepad2.right_trigger >= 0.5) { //right bumper puts them up
             intake.necGateClose();
         }
 
         if (gamepad2.x){
-            intake.intakeSetPower(1);
+            intake.setPower(1);
         } else {
-            intake.intakeSetPower(0);
+            intake.setPower(0);
         }
-        telemetry.update();
     }
 
     @Override

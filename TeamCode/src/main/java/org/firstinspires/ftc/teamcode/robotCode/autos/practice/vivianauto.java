@@ -51,7 +51,7 @@ public class vivianauto extends LinearOpMode{
         intake = new Intake(hardwareMap);
 
         Scheduler.reset();
-        follower = Constants.create(hardwareMap);
+//        follower = Constants.create(hardwareMap);
         follower.setPose(start);
         follower.update();
 

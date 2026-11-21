@@ -107,7 +107,7 @@ public class allField extends OpMode{
         intake = new Intake(hardwareMap);
         flyWheel = new FlyWheel(hardwareMap);
 
-        follower = Constants.create(hardwareMap);
+//        follower = Constants.create(hardwareMap);
 
         //Runs commands
         Scheduler.execute();

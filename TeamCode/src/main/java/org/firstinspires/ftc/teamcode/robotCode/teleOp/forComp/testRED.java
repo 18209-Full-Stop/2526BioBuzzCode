@@ -18,8 +18,8 @@ import static com.pedropathing.ivy.groups.Groups.repeat;
 @TeleOp
 public class testRED extends OpMode{
     //Variables
-    private double polSpeed = 1.0;
-    private double necSpeed = 1.0;
+    private double polSpeed = -0.7;
+    private double necSpeed = -0.7;
 
     //Create follower
     private Follower follower;
@@ -35,10 +35,10 @@ public class testRED extends OpMode{
         telemetry.addData("necSpeed", necSpeed);
 
         //Intake
-        if (gamepad2.left_bumper) { //left bumper gets artifacts out (brings them down)
-            intake.setPower(-1);
-        } else if (gamepad2.right_bumper) { //right bumper puts them up
+        if (gamepad2.left_trigger >= 0.5) { //left bumper gets artifacts out (brings them down)
             intake.setPower(1);
+        } else if (gamepad2.right_trigger >= 0.5) { //right bumper puts them up
+            intake.setPower(-1);
         } else { //otherwise turns intake off
             intake.setPower(0);
         }
@@ -81,14 +81,14 @@ public class testRED extends OpMode{
 //        }
 
         //Manual code to run flywheel nectar
-        if (gamepad2.y){
+        if (gamepad2.x){
             flyWheel.setPowerNec(necSpeed);
         } else if (!flyWheel.isLaunchingNec){
             flyWheel.setPowerNec(0);
         }
 
         //Manual code to run flywheel pollen
-        if (gamepad2.a){
+        if (gamepad2.b){
             flyWheel.setPowerPol(polSpeed);
         } else if (!flyWheel.isLaunchingPol){
             flyWheel.setPowerPol(0);
@@ -102,7 +102,7 @@ public class testRED extends OpMode{
         //Increments speed of pollen flywheel
         if (gamepad2.dpadUpWasPressed() && !(polSpeed >= 1.0)) {
             polSpeed += 0.1;
-        } else if(gamepad2.dpadDownWasPressed() && !(polSpeed <= 0)){
+        } else if(gamepad2.dpadDownWasPressed() && !(polSpeed <= 0.1)){
             polSpeed -= 0.1;
         }
 
@@ -114,10 +114,22 @@ public class testRED extends OpMode{
         }
 
         //resets necSpeed
-        if (gamepad2.left_trigger >= 0.5){
-            necSpeed = 0;
-        } else if (gamepad2.right_trigger >= 0.5){ //resets polSpeed
-            polSpeed = 0;
+        if (gamepad2.y){
+            necSpeed = 0.7;
+        } else if (gamepad2.a){ //resets polSpeed
+            polSpeed = 0.7;
+        }
+
+        if (gamepad2.right_bumper){
+            intake.setPolPos(0.2);
+        } else {
+            intake.setPolPos(0.5);
+        }
+
+        if (gamepad2.left_bumper){
+            intake.setNecPos(0.2);
+        } else {
+            intake.setNecPos(0.5);
         }
 
         //PedroPathing drive
@@ -126,7 +138,7 @@ public class testRED extends OpMode{
                 gamepad1.left_stick_x,
                 gamepad1.right_stick_x,
                 //added the 90 degrees rotation 4 red alliance
-                follower.pose().heading() + Math.toRadians(90)
+                follower.pose().heading()
         );
         ManualDrive.driveOrHold(follower, powers);
         follower.update();

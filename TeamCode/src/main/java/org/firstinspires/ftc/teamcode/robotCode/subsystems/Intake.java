@@ -12,10 +12,13 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
 public class Intake {
     private DcMotor intake;
     private Servo necGate;
+    private Servo polGate;
 
     //Variables
-    final double gatePosDown = 0.5;
-    final double gatePosUp = 0.2;
+    final double gatePosDownNec = 0;
+    final double gatePosUpNec = 0.2;
+    final double gatePosDownPol = 1;
+    final double gatePosUpPol = 0.5;
     public ElapsedTime runtime = new ElapsedTime();
 
     public Intake(HardwareMap hardwareMap) {
@@ -23,6 +26,7 @@ public class Intake {
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         necGate = hardwareMap.get(Servo.class, "necGate");
+        polGate = hardwareMap.get(Servo.class, "polGate");
     }
 
     public Command intakeSetPower(double power) {
@@ -42,19 +46,36 @@ public class Intake {
     }
 
     public void necGateOpen() {
-        necGate.setPosition(gatePosUp);
+        necGate.setPosition(gatePosUpNec);
+    }
+
+    public void necGateClose() {
+        necGate.setPosition(gatePosDownNec);
+    }
+
+    public void polGateOpen() {
+        polGate.setPosition(gatePosUpPol);
+    }
+
+    public void polGateClose() {
+        polGate.setPosition(gatePosDownPol);
     }
 
     public void setPower(double power){
         intake.setPower(power);
     }
 
-    public void necGateClose() {
-        necGate.setPosition(0);
-    }
 
     public void gateMove(double pos) {
 //        gate.setPosition(pos);
+    }
+
+    public void setNecPos(double pos){
+        necGate.setPosition(pos);
+    }
+
+    public void setPolPos(double pos){
+        polGate.setPosition(pos);
     }
 
     public Command refill(){

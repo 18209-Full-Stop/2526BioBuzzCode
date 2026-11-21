@@ -16,8 +16,8 @@ import com.pedropathing.math.Pose;
 @TeleOp
 public class testBLUE extends OpMode{
     //Variables
-    private double polSpeed = 1.0;
-    private double necSpeed = 1.0;
+    private double polSpeed = 0.7;
+    private double necSpeed = 0.7;
 
     //Create follower
     private Follower follower;
@@ -92,6 +92,18 @@ public class testBLUE extends OpMode{
             flyWheel.setPowerPol(0);
         }
 
+        if (gamepad2.square){
+            intake.necGateOpen();
+        } else {
+            intake.necGateClose();
+        }
+
+        if (gamepad2.circle){
+            intake.polGateOpen();
+        } else {
+            intake.polGateClose();
+        }
+
         //Resets heading when pressed
         if (gamepad1.left_bumper){
             follower.setPose(new Pose(follower.pose().x(), follower.pose().y(), 0));
@@ -117,8 +129,6 @@ public class testBLUE extends OpMode{
         } else if (gamepad2.right_trigger >= 0.5){ //resets polSpeed
             polSpeed = 0;
         }
-
-
 
         //PedroPathing drive
         DrivePowers powers = ManualDrive.fieldCentric(
